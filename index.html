@@ -1,0 +1,26 @@
+<div id="category-list" class="container">
+    <h1>Meal Categories</h1>
+    <div class="row" id="categories"></div>
+</div>
+<script>
+    // Fetch categories
+    fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+        .then(response => response.json())
+        .then(data => {
+            let categories = data.categories;
+            let categoryContainer = document.getElementById('categories');
+            categories.forEach(category => {
+                let categoryDiv = `
+                    <div class="col-md-4" onclick="navigateToCategory('${category.strCategory}')">
+                        <img src="${category.strCategoryThumb}" alt="${category.strCategory}" class="img-fluid">
+                        <h3>${category.strCategory}</h3>
+                    </div>`;
+                categoryContainer.innerHTML += categoryDiv;
+            });
+        });
+
+    // Function to navigate to category detail page
+    function navigateToCategory(category) {
+        window.location.href = `categoryDetail.html?category=${category}`;
+    }
+</script>
