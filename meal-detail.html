@@ -64,7 +64,7 @@
                         <ul>
                             ${getIngredients(meal).map(ingredient => `<li>${ingredient}</li>`).join('')}
                         </ul>
-                        ${meal.strYoutube ? `<a href="${meal.strYoutube}" target="_blank" class="btn btn-danger mt-3">Watch on YouTube</a>` : ""}
+                        ${meal.strYoutube ? embedYouTubeVideo(meal.strYoutube) : ""}
                     </div>`;
             } catch (error) {
                 console.error("Error fetching meal detail:", error);
@@ -79,6 +79,19 @@
                 if (ingredient) ingredients.push(`${measure} ${ingredient}`);
             }
             return ingredients;
+        }
+
+        function embedYouTubeVideo(url) {
+            const videoId = url.split('v=')[1];
+            return `
+                <div class="mt-3">
+                    <h3>Video Instructions</h3>
+                    <iframe width="100%" height="315" 
+                            src="https://www.youtube.com/embed/${videoId}" 
+                            title="YouTube video player" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>`;
         }
 
         fetchMealDetail();
